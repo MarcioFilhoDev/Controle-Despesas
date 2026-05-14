@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import "../../global.css";
 
 export default function Index() {
   return (
@@ -10,6 +11,7 @@ export default function Index() {
       }}
     >
       <Text>Iniciando o projeto</Text>
+      <Text className="text-2xl font-bold">Testando NativeWind</Text>
     </View>
   );
 }
