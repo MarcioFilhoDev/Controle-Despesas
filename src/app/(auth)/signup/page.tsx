@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import SignUpScreen from "@/src/screens/signup";
 
 export default function SignUp() {
-  return (
-    <View className="flex-1 items-center justify-center bg-cinza-75">
-      <Text>Tela de cadastro</Text>
-    </View>
-  );
+  return <SignUpScreen />;
 }
