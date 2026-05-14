@@ -7,7 +7,7 @@ export default function AuthLayout() {
       <Stack.Screen
         name="signup/page"
         options={{
-          title: "Cadastro",
+          title: "Novo usuário",
           headerTitleStyle: { fontWeight: "bold", fontSize: 22 },
           headerStyle: {
             backgroundColor: "#9FE1CB",
