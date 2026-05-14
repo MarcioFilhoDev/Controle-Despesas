@@ -1,18 +1,23 @@
 import { router, Stack } from "expo-router";
 import { useEffect } from "react";
 import "../../global.css";
+import { supabase } from "../config/supabase";
 
 export default function RootLayout() {
   useEffect(() => {
-    const signed = false;
-
-    requestAnimationFrame(() => {
-      if (!signed) {
-        router.replace("/(auth)/signin/page");
-      } else {
-        router.replace("/(app)/home/page");
-      }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      requestAnimationFrame(() => {
+        if (session) {
+          router.replace("/(app)/home/page");
+        } else {
+          router.replace("/(auth)/signin/page");
+        }
+      });
     });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   return (
