@@ -1,17 +1,11 @@
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import "../../global.css";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Iniciando o projeto</Text>
-      <Text className="text-2xl font-bold">Testando NativeWind</Text>
+    <View className="flex-1 items-center justify-center bg-cinza-75">
+      <Text className="text-xl font-bold">Carregando informações...</Text>
+      <ActivityIndicator size={"large"} color={"#085041"} />
     </View>
   );
 }
