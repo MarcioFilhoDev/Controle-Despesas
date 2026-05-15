@@ -9,8 +9,13 @@ export default function Home() {
   const { control, errors, handleSubmit, isSubmitting, onSubmit, reset } =
     useNovaDespesa();
 
-  const { getDespesas, listaDespesas, loadingListaDespesas, totalDespesas } =
-    useGetDespesas();
+  const {
+    getDespesas,
+    deleteDespesas,
+    listaDespesas,
+    loadingListaDespesas,
+    totalDespesas,
+  } = useGetDespesas();
 
   useEffect(() => {
     getDespesas();
@@ -33,6 +38,7 @@ export default function Home() {
       loadingListaDespesas={loadingListaDespesas}
       totalDespesas={totalDespesas}
       reset={reset}
+      deleteDespesas={deleteDespesas}
     />
   );
 }

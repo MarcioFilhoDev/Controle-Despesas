@@ -55,4 +55,29 @@ export const DataBaseServices = {
 
     return lista_despesas;
   },
+
+  deletarDespesa: async (id: string) => {
+    // Verificar se tem o 'id' do usuario na sessão
+    const { data: dados_usuario } = await supabase.auth.getUser();
+
+    if (!dados_usuario) return;
+
+    //  Salvando o user_id em uma variavel
+    const user_id = dados_usuario.user?.id;
+
+    //  Verificar no banco de dados se existe essa
+    const { data, error } = await supabase
+      .from("despesas")
+      .delete()
+      .eq("user_id", user_id)
+      .eq("id", id);
+
+    if (!data) return;
+
+    if (error) {
+      console.log("Erro ao deletar despesa");
+      console.log(error.message);
+      return;
+    }
+  },
 };

@@ -19,6 +19,7 @@ interface HomeScreenProps extends NovaDespesaProps {
   listaDespesas: DespesaProps[];
   loadingListaDespesas: boolean;
   totalDespesas: number;
+  deleteDespesas: (id_despesa: string) => Promise<void>;
 }
 
 export default function HomeScreen({
@@ -32,6 +33,7 @@ export default function HomeScreen({
   loadingListaDespesas,
   totalDespesas,
   reset,
+  deleteDespesas,
 }: HomeScreenProps) {
   const [mostrarModalNovaDespesa, setMostrarModalNovaDespesa] =
     useState<boolean>(false);
@@ -114,6 +116,7 @@ export default function HomeScreen({
                 descricao={item.item.descricao}
                 valor={item.item.valor}
                 data_despesa={item.item.data_despesa}
+                deleteDespesas={() => deleteDespesas(String(item.item.id))}
               />
             )}
           />

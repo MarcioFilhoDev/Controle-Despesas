@@ -1,13 +1,20 @@
 import { DespesaProps } from "@/src/types/Despesa";
 import { ShoppingBag } from "lucide-react-native";
 import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
+import ModalDeletandoDespesa from "../modalDeletandoDespesa";
+
+interface CardDespesaProps extends DespesaProps {
+  deleteDespesas: (id: string) => Promise<void>;
+}
 
 export default function CardDespesa({
   descricao,
   data_despesa,
   valor,
-}: DespesaProps) {
+  id,
+  deleteDespesas,
+}: CardDespesaProps) {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
@@ -37,12 +44,12 @@ export default function CardDespesa({
           </Text>
         </View>
 
-        {/* <Modal visible={showModal} transparent>
-          <ModalDeleteExpense
+        <Modal visible={showModal} transparent>
+          <ModalDeletandoDespesa
             closeModal={() => setShowModal(false)}
-            onDelete={() => onDelete(id)}
+            deleteDespesas={() => deleteDespesas(String(id))}
           />
-        </Modal> */}
+        </Modal>
       </View>
     </TouchableOpacity>
   );

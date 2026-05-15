@@ -15,28 +15,50 @@ const useGetDespesas = () => {
     try {
       const response = await DataBaseServices.listaDespesas();
 
-      //  Lógica para resgatar o valor total de despesas
+      if (!response) {
+        setListaDespesas([]);
+        return;
+      }
+
+      //  Somatório para obter o valor total de despesas
       const valorTotal = response?.reduce(
         (acc, item) => (item.situacao === false ? acc + item.valor : acc + 0),
         0,
       );
-
+      //  Atribuindo a uma variavel o valor total das despesas
       setTotalDespesas(Number(valorTotal));
 
-      //    se 'response' vem vazio, deve passar um array vazio
-      setListaDespesas(response || []);
+      //  Atribuindo lista de despesas encontradas
+      setListaDespesas(response);
+
+      //  Removendo loading da lista de despesas
       setLoadingListaDespesas(false);
     } catch (error) {
       console.log(error);
+      //  Removendo loading
       setLoadingListaDespesas(false);
     }
   }, []);
+
+  //  Deltando uma despesa especifica
+  const deleteDespesas = async (id_despesa: string) => {
+    try {
+      console.log(id_despesa);
+
+      await DataBaseServices.deletarDespesa(id_despesa).then(() => {
+        getDespesas();
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     listaDespesas,
     loadingListaDespesas,
     totalDespesas,
     getDespesas,
+    deleteDespesas,
   };
 };
 
