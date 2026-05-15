@@ -1,19 +1,14 @@
 import { Text, TouchableOpacity, View } from "react-native";
 
-interface ModalDeleteExpenseProps {
+interface ModalLogoutProps {
   closeModal: () => void;
-  deleteDespesas: () => Promise<void>;
+  signOutUser: () => Promise<void>;
 }
 
-export default function ModalDeletandoDespesa({
+export default function ModalLogout({
   closeModal,
-  deleteDespesas,
-}: ModalDeleteExpenseProps) {
-  async function handleDelete() {
-    await deleteDespesas();
-    closeModal();
-  }
-
+  signOutUser,
+}: ModalLogoutProps) {
   return (
     <View className="flex-1 items-center justify-center">
       <TouchableOpacity
@@ -21,22 +16,22 @@ export default function ModalDeletandoDespesa({
         className="bg-black/45 absolute flex-1 w-full h-full"
       />
 
-      <View className="bg-cinza-75 w-[80%] p-6 rounded-lg elevation gap-6">
-        <Text className="text-xl font-medium">Deseja apagar essa despesa?</Text>
+      <View className="bg-cinza-50 w-[80%] p-6 rounded-lg elevation gap-6">
+        <Text className="text-xl font-medium">Deseja realmente sair?</Text>
 
         <View className="flex-row items-center justify-end gap-2 mt-2">
           <TouchableOpacity
             className="bg-white/60 px-3 py-0.5 rounded-md border-2 border-cinza-900/70"
             onPress={() => closeModal()}
           >
-            <Text className="text-cinza-900/70 font-semibold">Cancelar</Text>
+            <Text className="text-cinza-900/70 font-semibold">Não</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={handleDelete}
+            onPress={signOutUser}
             className="bg-white/60 px-3 py-0.5 rounded-md border-2 border-red-400"
           >
-            <Text className="text-red-500 font-semibold">Apagar</Text>
+            <Text className="text-red-500 font-semibold">Sim</Text>
           </TouchableOpacity>
         </View>
       </View>

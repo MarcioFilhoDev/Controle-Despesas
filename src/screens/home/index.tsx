@@ -1,8 +1,9 @@
 import CardDespesa from "@/src/components/cardDespesa";
+import ModalLogout from "@/src/components/modalLogout";
 import NovaDespesa from "@/src/components/novaDespesa";
 import { DespesaProps } from "@/src/types/Despesa";
 import { NovaDespesaProps } from "@/src/types/NovaDespesa";
-import { Plus } from "lucide-react-native";
+import { CirclePower, Plus } from "lucide-react-native";
 import { useState } from "react";
 import {
   ActivityIndicator,
@@ -20,6 +21,7 @@ interface HomeScreenProps extends NovaDespesaProps {
   loadingListaDespesas: boolean;
   totalDespesas: number;
   deleteDespesas: (id_despesa: string) => Promise<void>;
+  signOutUser: () => Promise<void>;
 }
 
 export default function HomeScreen({
@@ -34,9 +36,12 @@ export default function HomeScreen({
   totalDespesas,
   reset,
   deleteDespesas,
+  signOutUser,
 }: HomeScreenProps) {
   const [mostrarModalNovaDespesa, setMostrarModalNovaDespesa] =
     useState<boolean>(false);
+
+  const [mostrarModalLogout, setMostarModalLogout] = useState<boolean>(false);
 
   return (
     <View
@@ -49,15 +54,29 @@ export default function HomeScreen({
           {mensagemInicial}
         </Text>
 
-        <TouchableOpacity
-          activeOpacity={0.75}
-          className="bg-white rounded-full p-2 elevation"
-          onPress={() => setMostrarModalNovaDespesa(true)}
-        >
-          <Text>
-            <Plus size={24} />
-          </Text>
-        </TouchableOpacity>
+        <View className="flex-row gap-4">
+          {/* Botão para adicionar uma despesa */}
+          <TouchableOpacity
+            activeOpacity={0.75}
+            className="bg-white rounded-full p-2 elevation"
+            onPress={() => setMostrarModalNovaDespesa(true)}
+          >
+            <Text>
+              <Plus size={24} />
+            </Text>
+          </TouchableOpacity>
+
+          {/* Botão para fazer logout/sair */}
+          <TouchableOpacity
+            activeOpacity={0.75}
+            className="bg-white rounded-full p-2 elevation"
+            onPress={() => setMostarModalLogout(true)}
+          >
+            <Text>
+              <CirclePower size={24} />
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Card total */}
@@ -99,6 +118,13 @@ export default function HomeScreen({
           handleSubmit={handleSubmit}
           isSubmitting={isSubmitting}
           onSubmit={onSubmit}
+        />
+      </Modal>
+
+      <Modal transparent visible={mostrarModalLogout} animationType="slide">
+        <ModalLogout
+          closeModal={() => setMostarModalLogout(false)}
+          signOutUser={signOutUser}
         />
       </Modal>
 

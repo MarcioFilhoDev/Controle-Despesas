@@ -1,6 +1,7 @@
 import useGetDespesas from "@/src/hooks/useGetDespesas";
 import useGetInfoUser from "@/src/hooks/useGetInfoUser";
 import useNovaDespesa, { DespesaFormData } from "@/src/hooks/useNovaDespesa";
+import useSignOut from "@/src/hooks/useSignOut";
 import HomeScreen from "@/src/screens/home";
 import { useEffect } from "react";
 
@@ -8,7 +9,7 @@ export default function Home() {
   const { mensagemInicial } = useGetInfoUser();
   const { control, errors, handleSubmit, isSubmitting, onSubmit, reset } =
     useNovaDespesa();
-
+  const { signOutUser } = useSignOut();
   const {
     getDespesas,
     deleteDespesas,
@@ -39,6 +40,7 @@ export default function Home() {
       totalDespesas={totalDespesas}
       reset={reset}
       deleteDespesas={deleteDespesas}
+      signOutUser={signOutUser}
     />
   );
 }
