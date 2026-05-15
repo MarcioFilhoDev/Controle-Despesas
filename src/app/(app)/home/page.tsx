@@ -1,11 +1,25 @@
+import useGetDespesas from "@/src/hooks/useGetDespesas";
 import useGetInfoUser from "@/src/hooks/useGetInfoUser";
-import useNovaDespesa from "@/src/hooks/useNovaDespesa";
+import useNovaDespesa, { DespesaFormData } from "@/src/hooks/useNovaDespesa";
 import HomeScreen from "@/src/screens/home";
+import { useEffect } from "react";
 
 export default function Home() {
   const { mensagemInicial } = useGetInfoUser();
-  const { control, errors, handleSubmit, isSubmitting, onSubmit } =
+  const { control, errors, handleSubmit, isSubmitting, onSubmit, reset } =
     useNovaDespesa();
+
+  const { getDespesas, listaDespesas, loadingListaDespesas, totalDespesas } =
+    useGetDespesas();
+
+  useEffect(() => {
+    getDespesas();
+  }, [getDespesas]);
+
+  const handleNovaDespesa = async (data: DespesaFormData) => {
+    await onSubmit(data);
+    await getDespesas();
+  };
 
   return (
     <HomeScreen
@@ -14,7 +28,11 @@ export default function Home() {
       errors={errors}
       handleSubmit={handleSubmit}
       isSubmitting={isSubmitting}
-      onSubmit={onSubmit}
+      onSubmit={handleNovaDespesa}
+      listaDespesas={listaDespesas}
+      loadingListaDespesas={loadingListaDespesas}
+      totalDespesas={totalDespesas}
+      reset={reset}
     />
   );
 }

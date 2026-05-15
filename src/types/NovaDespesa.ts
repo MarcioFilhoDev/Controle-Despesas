@@ -7,4 +7,5 @@ export interface NovaDespesaProps {
   handleSubmit: UseFormHandleSubmit<DespesaFormData>;
   isSubmitting: boolean;
   onSubmit: (data: DespesaFormData) => Promise<void>;
+  reset: () => void;
 }

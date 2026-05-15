@@ -1,6 +1,11 @@
-import { NovaDespesaProps } from "@/src/interfaces/NovaDespesa";
+import { DespesaFormData } from "@/src/hooks/useNovaDespesa";
 import { useState } from "react";
-import { Controller } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 import {
   ActivityIndicator,
   Keyboard,
@@ -13,8 +18,13 @@ import {
 } from "react-native";
 import CustomCalendar from "../calendarioNovaDespesa";
 
-interface MoldaNovaDespesaProps extends NovaDespesaProps {
+interface MoldaNovaDespesaProps {
   closeModal: () => void;
+  control: Control<DespesaFormData>;
+  errors: FieldErrors<DespesaFormData>;
+  handleSubmit: UseFormHandleSubmit<DespesaFormData>;
+  isSubmitting: boolean;
+  onSubmit: (data: DespesaFormData) => Promise<void>;
 }
 
 export default function NovaDespesa({
@@ -26,6 +36,11 @@ export default function NovaDespesa({
   onSubmit,
 }: MoldaNovaDespesaProps) {
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
+
+  async function handleNovaDespesa(data: DespesaFormData) {
+    await onSubmit(data);
+    closeModal();
+  }
 
   return (
     <View className="flex-1 items-center justify-center">
@@ -52,7 +67,7 @@ export default function NovaDespesa({
                 <Controller
                   control={control}
                   name="valor"
-                  defaultValue={0.0}
+                  defaultValue={""}
                   render={({ field: { value, onChange } }) => (
                     <TextInput
                       placeholder="0,00"
@@ -62,8 +77,19 @@ export default function NovaDespesa({
                       autoCorrect={false}
                       keyboardType="number-pad"
                       maxLength={15}
-                      value={value ? String(value).replace(",", ".") : ""}
-                      onChangeText={onChange}
+                      value={value}
+                      onChangeText={(text) => {
+                        //  Primeiro converte , para .
+                        let texto_formatado = text.replace(/[^0-9.,]/g, "");
+
+                        const parts = texto_formatado.split(/[.,]/);
+
+                        if (parts.length > 2) {
+                          return;
+                        }
+
+                        onChange(texto_formatado);
+                      }}
                     />
                   )}
                 />
@@ -144,7 +170,8 @@ export default function NovaDespesa({
                       <CustomCalendar
                         closeCalendar={() => setMostrarCalendario(false)}
                         selectDate={(date) => {
-                          onChange(new Date(date));
+                          let data_despesa = new Date(date);
+                          onChange(data_despesa);
                           setMostrarCalendario(false);
                         }}
                       />
@@ -166,7 +193,7 @@ export default function NovaDespesa({
 
           {/* Botão para salvar */}
           <TouchableOpacity
-            onPress={handleSubmit(onSubmit)}
+            onPress={handleSubmit(handleNovaDespesa)}
             className="bg-receita-200/70 border h-12 border-receita-400/70 items-center justify-center rounded-xl mt-6"
           >
             <Text className="text-xl text-receita-800 font-extrabold tracking-[0.4]">

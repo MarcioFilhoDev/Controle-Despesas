@@ -10,10 +10,7 @@ const novaDespesaSchema = z.object({
     .min(1, "A descrição é obrigatória")
     .max(50, "Atingiu o limite de caracteres"),
 
-  valor: z
-    .number()
-    .positive("O valor deve ser positivo")
-    .min(0.01, "Valor mínimo é 0.01"),
+  valor: z.string().min(1, "O valor é obrigatório"),
 
   data_despesa: z.date({
     error: "Data escolhida é inválida",
@@ -27,6 +24,7 @@ const useNovaDespesa = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<DespesaFormData>({
     resolver: zodResolver(novaDespesaSchema),
@@ -34,9 +32,11 @@ const useNovaDespesa = () => {
 
   const onSubmit = async (data: DespesaFormData) => {
     try {
+      const valorConvertido = Number(data.valor.replace(",", "."));
+
       await DataBaseServices.novaDespesa(
         data.descricao,
-        data.valor,
+        valorConvertido,
         data.data_despesa,
       );
     } catch (error) {
@@ -48,6 +48,7 @@ const useNovaDespesa = () => {
     control,
     handleSubmit,
     onSubmit,
+    reset,
     errors,
     isSubmitting,
   };

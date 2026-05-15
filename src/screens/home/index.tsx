@@ -1,11 +1,24 @@
+import CardDespesa from "@/src/components/cardDespesa";
 import NovaDespesa from "@/src/components/novaDespesa";
-import { NovaDespesaProps } from "@/src/interfaces/NovaDespesa";
+import { DespesaProps } from "@/src/types/Despesa";
+import { NovaDespesaProps } from "@/src/types/NovaDespesa";
 import { Plus } from "lucide-react-native";
 import { useState } from "react";
-import { Modal, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  Modal,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 interface HomeScreenProps extends NovaDespesaProps {
   mensagemInicial: string;
+  listaDespesas: DespesaProps[];
+  loadingListaDespesas: boolean;
+  totalDespesas: number;
 }
 
 export default function HomeScreen({
@@ -15,6 +28,10 @@ export default function HomeScreen({
   handleSubmit,
   isSubmitting,
   onSubmit,
+  listaDespesas,
+  loadingListaDespesas,
+  totalDespesas,
+  reset,
 }: HomeScreenProps) {
   const [mostrarModalNovaDespesa, setMostrarModalNovaDespesa] =
     useState<boolean>(false);
@@ -54,12 +71,11 @@ export default function HomeScreen({
           <Text className="text-2xl font-bold text-cinza-800">
             R$
             <Text className="text-4xl font-bold text-cinza-900">
-              {/* {loadingAllExpenses ? (
+              {loadingListaDespesas ? (
                 <ActivityIndicator size={"large"} color={"#2C2C2A"} />
               ) : (
-                `${totalValueExpense.toFixed(2)}`
-              )} */}
-              0.00
+                totalDespesas.toFixed(2)
+              )}
             </Text>
           </Text>
         </TouchableOpacity>
@@ -74,7 +90,7 @@ export default function HomeScreen({
         <NovaDespesa
           closeModal={() => {
             setMostrarModalNovaDespesa(false);
-            control._reset();
+            reset();
           }}
           control={control}
           errors={errors}
@@ -85,40 +101,24 @@ export default function HomeScreen({
       </Modal>
 
       {/* Lista das despesas */}
-      {/* <View className="w-full rounded-t-[42px] flex-1 mt-10 bg-white ">
-        {listaDespesas.length === 0 ? (
-          <View className="items-center mt-6">
-            <Text className="text-xl text-cinza-900 font-bold">
-              Você ainda não registrou despesas
-            </Text>
+      <View className="w-full rounded-t-[42px] flex-1 mt-10 bg-white ">
+        {loadingListaDespesas ? (
+          <View>
+            <ActivityIndicator size={"large"} color={"#085041"} />
           </View>
         ) : (
-          <View>
-            <View className="mx-[5%] mt-6">
-              <Text className="text-[22px] text-cinza-900 font-bold">
-                Gastos Recentes
-              </Text>
-            </View>
-
-            {loadingAllExpenses}
-            <FlatList
-              data={listaDespesas}
-              renderItem={({ item, index }) => (
-                <CardDespesa
-                  situacao={false}
-                  key={index}
-                  data={item.data}
-                  descricao={item.descricao}
-                  valor={item.valor}
-                  id={item.id}
-                  onDelete={deleteExpense}
-                  loadingAllExpenses={loadingAllExpenses}
-                />
-              )}
-            />
-          </View>
+          <FlatList
+            data={listaDespesas}
+            renderItem={(item) => (
+              <CardDespesa
+                descricao={item.item.descricao}
+                valor={item.item.valor}
+                data_despesa={item.item.data_despesa}
+              />
+            )}
+          />
         )}
-      </View> */}
+      </View>
     </View>
   );
 }
