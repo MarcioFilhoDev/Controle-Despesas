@@ -1,3 +1,4 @@
+import { inputTextColor } from "@/src/constants/input-text-color";
 import { DespesaFormData } from "@/src/hooks/useNovaDespesa";
 import { useState } from "react";
 import {
@@ -87,9 +88,9 @@ export default function NovaDespesa({
                       render={({ field: { value, onChange } }) => (
                         <TextInput
                           placeholder="0,00"
-                          className="text-3xl h-18 font-black flex-1 ml-1 mr-4 text-black/75"
-                          placeholderTextColor={"#0000005e"}
+                          className="text-3xl h-18 font-black flex-1 ml-1 mr-4 text-cinza-900"
                           autoCapitalize="none"
+                          placeholderTextColor={inputTextColor}
                           autoCorrect={false}
                           keyboardType="number-pad"
                           maxLength={15}
@@ -134,8 +135,8 @@ export default function NovaDespesa({
                     render={({ field: { value, onChange } }) => (
                       <TextInput
                         placeholder="exemplo: mercado"
-                        className="bg-white pl-4 h-14 text-lg rounded-xl text-black"
-                        placeholderTextColor={"#0000007a"}
+                        className="bg-white pl-4 h-14 text-lg rounded-xl text-cinza-900"
+                        placeholderTextColor={inputTextColor}
                         autoCapitalize="none"
                         autoCorrect={false}
                         value={value}

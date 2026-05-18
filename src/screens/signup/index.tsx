@@ -1,3 +1,4 @@
+import { inputTextColor } from "@/src/constants/input-text-color";
 import { SignUpFormData } from "@/src/hooks/useSignUp";
 import { Link } from "expo-router";
 import { Eye, EyeOff, Lock, Mail, User } from "lucide-react-native";
@@ -59,7 +60,7 @@ export default function SignUpScreen({
                 <TextInput
                   placeholder="nome"
                   className="text-[16px] flex-1 mx-4 text-cinza-900"
-                  placeholderTextColor={"#888"}
+                  placeholderTextColor={inputTextColor}
                   autoCapitalize="none"
                   autoCorrect={false}
                   value={value}
@@ -90,7 +91,7 @@ export default function SignUpScreen({
                 <TextInput
                   placeholder="e-mail"
                   className="text-[16px] flex-1 mx-4 text-cinza-900"
-                  placeholderTextColor={"#888"}
+                  placeholderTextColor={inputTextColor}
                   autoCapitalize="none"
                   autoCorrect={false}
                   value={value}
@@ -120,7 +121,7 @@ export default function SignUpScreen({
                 <TextInput
                   placeholder="senha"
                   className="text-[16px] flex-1 mx-4 text-cinza-900"
-                  placeholderTextColor={"#888"}
+                  placeholderTextColor={inputTextColor}
                   autoCapitalize="none"
                   autoCorrect={false}
                   secureTextEntry={!mostrarSenha}
