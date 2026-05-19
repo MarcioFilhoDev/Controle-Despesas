@@ -9,7 +9,7 @@ export default function EditarOptionSwipe() {
       className="bg-lime-700 p-2 rounded-lg items-center justify-center"
     >
       <Pencil size={20} color={"#fff"} strokeWidth={2.5} />
-      <Text className="text-white font-semibold">Deletar</Text>
+      <Text className="text-white font-semibold">Editar</Text>
     </TouchableOpacity>
   );
 }

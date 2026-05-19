@@ -2,7 +2,6 @@ import CardDespesa from "@/src/components/cardDespesa";
 import ModalLogout from "@/src/components/modalLogout";
 import NovaDespesa from "@/src/components/novaDespesa";
 import DeletarOptionSwipe from "@/src/components/options_swipe/deletar";
-import EditarOptionSwipe from "@/src/components/options_swipe/editar";
 import { DespesaProps } from "@/src/types/Despesa";
 import { NovaDespesaProps } from "@/src/types/NovaDespesa";
 import { CirclePower, Plus } from "lucide-react-native";
@@ -162,7 +161,7 @@ export default function HomeScreen({
                       }
                     />
                   )}
-                  renderLeftActions={() => <EditarOptionSwipe />}
+                  // renderLeftActions={() => <EditarOptionSwipe />}
                 >
                   <CardDespesa
                     id={item.item.id}
