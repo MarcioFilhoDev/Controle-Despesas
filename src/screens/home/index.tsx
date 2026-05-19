@@ -1,6 +1,8 @@
 import CardDespesa from "@/src/components/cardDespesa";
 import ModalLogout from "@/src/components/modalLogout";
 import NovaDespesa from "@/src/components/novaDespesa";
+import DeletarOptionSwipe from "@/src/components/options_swipe/deletar";
+import EditarOptionSwipe from "@/src/components/options_swipe/editar";
 import { DespesaProps } from "@/src/types/Despesa";
 import { NovaDespesaProps } from "@/src/types/NovaDespesa";
 import { CirclePower, Plus } from "lucide-react-native";
@@ -14,6 +16,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
 interface HomeScreenProps extends NovaDespesaProps {
   mensagemInicial: string;
@@ -130,30 +133,49 @@ export default function HomeScreen({
       </Modal>
 
       {/* Lista das despesas */}
-      <View className="w-full rounded-t-[42px] flex-1 mt-10 bg-white ">
+      <View className="w-full rounded-t-[42px] flex-1 mt-4 bg-white pt-4 pb-10 ">
         {loadingListaDespesas ? (
           <View className="mt-10 items-center">
             <ActivityIndicator size={"large"} color={"#085041"} />
           </View>
         ) : listaDespesas.length === 0 ? (
           <View className="mt-10 items-center">
-            <Text>Você ainda não tem gastos</Text>
+            <Text className="text-lg">Você ainda não tem gastos</Text>
           </View>
         ) : (
-          <FlatList
-            data={listaDespesas}
-            renderItem={(item) => (
-              <CardDespesa
-                id={item.item.id}
-                descricao={item.item.descricao}
-                valor={item.item.valor}
-                data_despesa={item.item.data_despesa}
-                situacao={item.item.situacao}
-                deleteDespesas={() => deleteDespesas(String(item.item.id))}
-                categoria={item.item.categoria}
-              />
-            )}
-          />
+          <View className="flex-1 mx-[5%]">
+            <FlatList
+              contentContainerStyle={{
+                flex: 1,
+                gap: 22,
+              }}
+              showsVerticalScrollIndicator={false}
+              data={listaDespesas}
+              renderItem={(item) => (
+                <ReanimatedSwipeable
+                  friction={4}
+                  renderRightActions={() => (
+                    <DeletarOptionSwipe
+                      id={item.item.id}
+                      deleteDespesas={() =>
+                        deleteDespesas(String(item.item.id))
+                      }
+                    />
+                  )}
+                  renderLeftActions={() => <EditarOptionSwipe />}
+                >
+                  <CardDespesa
+                    id={item.item.id}
+                    descricao={item.item.descricao}
+                    valor={item.item.valor}
+                    data_despesa={item.item.data_despesa}
+                    situacao={item.item.situacao}
+                    categoria={item.item.categoria}
+                  />
+                </ReanimatedSwipeable>
+              )}
+            />
+          </View>
         )}
       </View>
     </View>

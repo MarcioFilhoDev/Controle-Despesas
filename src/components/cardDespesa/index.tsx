@@ -5,13 +5,7 @@ import {
   ShoppingBasket,
   UtensilsCrossed,
 } from "lucide-react-native";
-import { useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
-import ModalDeletandoDespesa from "../modalDeletandoDespesa";
-
-interface CardDespesaProps extends DespesaProps {
-  deleteDespesas: (id: string) => Promise<void>;
-}
+import { Text, TouchableOpacity, View } from "react-native";
 
 type CategoriaConfig = {
   icone: React.ReactNode;
@@ -25,10 +19,7 @@ export default function CardDespesa({
   id,
   situacao,
   categoria,
-  deleteDespesas,
-}: CardDespesaProps) {
-  const [showModal, setShowModal] = useState<boolean>(false);
-
+}: DespesaProps) {
   const categoriaIcone: Record<string, CategoriaConfig> = {
     Abastecimento: {
       icone: <Fuel size={26} color="#f97316" />,
@@ -54,11 +45,7 @@ export default function CardDespesa({
   };
 
   return (
-    <TouchableOpacity
-      onLongPress={() => setShowModal(true)}
-      activeOpacity={0.7}
-      className="bg-white mt-6 mx-[5%]"
-    >
+    <TouchableOpacity activeOpacity={1} className="rounded-lg bg-white">
       <View>
         <View
           className="flex-row border-l-[8px] py-2 rounded-l-lg "
@@ -89,13 +76,6 @@ export default function CardDespesa({
             -R$ <Text>{valor.toFixed(2)}</Text>
           </Text>
         </View>
-
-        <Modal visible={showModal} transparent>
-          <ModalDeletandoDespesa
-            closeModal={() => setShowModal(false)}
-            deleteDespesas={() => deleteDespesas(String(id))}
-          />
-        </Modal>
       </View>
     </TouchableOpacity>
   );

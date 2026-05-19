@@ -4,6 +4,7 @@ import useNovaDespesa, { DespesaFormData } from "@/src/hooks/useNovaDespesa";
 import useSignOut from "@/src/hooks/useSignOut";
 import HomeScreen from "@/src/screens/home";
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function Home() {
   //  Mensagem inicial do app
@@ -35,19 +36,21 @@ export default function Home() {
   };
 
   return (
-    <HomeScreen
-      mensagemInicial={mensagemInicial}
-      control={control}
-      errors={errors}
-      handleSubmit={handleSubmit}
-      isSubmitting={isSubmitting}
-      onSubmit={handleNovaDespesa}
-      listaDespesas={listaDespesas}
-      loadingListaDespesas={loadingListaDespesas}
-      totalDespesas={totalDespesas}
-      reset={reset}
-      deleteDespesas={deleteDespesas}
-      signOutUser={signOutUser}
-    />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <HomeScreen
+        mensagemInicial={mensagemInicial}
+        control={control}
+        errors={errors}
+        handleSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        onSubmit={handleNovaDespesa}
+        listaDespesas={listaDespesas}
+        loadingListaDespesas={loadingListaDespesas}
+        totalDespesas={totalDespesas}
+        reset={reset}
+        deleteDespesas={deleteDespesas}
+        signOutUser={signOutUser}
+      />
+    </GestureHandlerRootView>
   );
 }
