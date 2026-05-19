@@ -1,6 +1,8 @@
 import { inputTextColor } from "@/src/constants/input-text-color";
+import useBuscaCategorias from "@/src/hooks/useBuscaCategorias";
 import { DespesaFormData } from "@/src/hooks/useNovaDespesa";
-import { useState } from "react";
+import { Plus } from "lucide-react-native";
+import { useEffect, useState } from "react";
 import {
   Control,
   Controller,
@@ -12,6 +14,7 @@ import {
   FlatList,
   Keyboard,
   KeyboardAvoidingView,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -22,6 +25,7 @@ import {
   View,
 } from "react-native";
 import CustomCalendar from "../calendarioNovaDespesa";
+import ModalNovaCategoria from "../novaCategoria";
 
 interface MoldaNovaDespesaProps {
   closeModal: () => void;
@@ -41,15 +45,14 @@ export default function NovaDespesa({
   onSubmit,
 }: MoldaNovaDespesaProps) {
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
-
+  const [mostrarNovaCategoria, setNovaCategoria] = useState<boolean>(false);
   const [categoria, setCategoria] = useState<string>("");
 
-  const [listaCategorias, setListaCategorias] = useState<string[]>([
-    "Alimentação",
-    "Abastecimento",
-    "Mercado",
-    "Roupas",
-  ]);
+  const { buscaCategorias, listaCategorias } = useBuscaCategorias();
+
+  useEffect(() => {
+    buscaCategorias();
+  }, [buscaCategorias]);
 
   async function handleNovaDespesa(data: DespesaFormData) {
     await onSubmit(data);
@@ -171,6 +174,14 @@ export default function NovaDespesa({
                     Selecione sua categoria
                   </Text>
 
+                  {/* Modal para registrar nova categoria */}
+                  <Modal transparent visible={mostrarNovaCategoria}>
+                    <ModalNovaCategoria
+                      closeModal={() => setNovaCategoria(false)}
+                      categoriaCriada={buscaCategorias}
+                    />
+                  </Modal>
+
                   <Controller
                     control={control}
                     name="categoria"
@@ -181,7 +192,10 @@ export default function NovaDespesa({
                         showsHorizontalScrollIndicator={false}
                         data={listaCategorias}
                         renderItem={({ item, index }) => (
-                          <View key={index} className="mr-4">
+                          <View
+                            key={index}
+                            className="mr-4 flex-row items-center"
+                          >
                             <TouchableOpacity
                               onPress={() => {
                                 onChange((value = item));
@@ -195,6 +209,17 @@ export default function NovaDespesa({
                             >
                               <Text>{item}</Text>
                             </TouchableOpacity>
+
+                            {index === listaCategorias.length - 1 && (
+                              <TouchableOpacity
+                                onPress={() => setNovaCategoria(true)}
+                                className="bg-white px-3 py-1 rounded ml-4"
+                              >
+                                <Text>
+                                  <Plus size={20} />
+                                </Text>
+                              </TouchableOpacity>
+                            )}
                           </View>
                         )}
                       />
@@ -202,7 +227,7 @@ export default function NovaDespesa({
                   />
                 </View>
 
-                {/* Mensagem de erro da descrição */}
+                {/* Mensagem de erro da categoria */}
                 <View className="w-[80%] ml-2">
                   {errors.categoria && (
                     <Text className="text-left text-red-500">

@@ -5,7 +5,7 @@ import {
   ShoppingBasket,
   UtensilsCrossed,
 } from "lucide-react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import ModalDeletandoDespesa from "../modalDeletandoDespesa";
 
@@ -52,10 +52,6 @@ export default function CardDespesa({
     icone: <ShoppingBasket size={26} color="#22c55e" />,
     cor: "bg-green-100",
   };
-
-  useEffect(() => {
-    console.log(situacao);
-  });
 
   return (
     <TouchableOpacity

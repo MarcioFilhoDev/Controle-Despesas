@@ -4,7 +4,7 @@ import NovaDespesa from "@/src/components/novaDespesa";
 import { DespesaProps } from "@/src/types/Despesa";
 import { NovaDespesaProps } from "@/src/types/NovaDespesa";
 import { CirclePower, Plus } from "lucide-react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -42,10 +42,6 @@ export default function HomeScreen({
     useState<boolean>(false);
 
   const [mostrarModalLogout, setMostarModalLogout] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(listaDespesas);
-  });
 
   return (
     <View

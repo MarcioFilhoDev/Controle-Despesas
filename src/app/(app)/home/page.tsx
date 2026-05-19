@@ -6,10 +6,17 @@ import HomeScreen from "@/src/screens/home";
 import { useEffect } from "react";
 
 export default function Home() {
+  //  Mensagem inicial do app
   const { mensagemInicial } = useGetInfoUser();
+
+  //  Central para registrar novas despesas
   const { control, errors, handleSubmit, isSubmitting, onSubmit, reset } =
     useNovaDespesa();
+
+  //  Deslogar o usuário
   const { signOutUser } = useSignOut();
+
+  //  Resgatar as despesas do usuário
   const {
     getDespesas,
     deleteDespesas,

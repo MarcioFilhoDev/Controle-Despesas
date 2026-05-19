@@ -43,8 +43,6 @@ const useGetDespesas = () => {
   //  Deltando uma despesa especifica
   const deleteDespesas = async (id_despesa: string) => {
     try {
-      console.log(id_despesa);
-
       await DataBaseServices.deletarDespesa(id_despesa).then(() => {
         getDespesas();
       });
