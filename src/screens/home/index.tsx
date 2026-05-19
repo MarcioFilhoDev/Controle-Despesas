@@ -4,7 +4,7 @@ import NovaDespesa from "@/src/components/novaDespesa";
 import { DespesaProps } from "@/src/types/Despesa";
 import { NovaDespesaProps } from "@/src/types/NovaDespesa";
 import { CirclePower, Plus } from "lucide-react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -43,6 +43,10 @@ export default function HomeScreen({
 
   const [mostrarModalLogout, setMostarModalLogout] = useState<boolean>(false);
 
+  useEffect(() => {
+    console.log(listaDespesas);
+  });
+
   return (
     <View
       className="flex-1 items-center bg-cinza-100/60"
@@ -69,11 +73,11 @@ export default function HomeScreen({
           {/* Botão para fazer logout/sair */}
           <TouchableOpacity
             activeOpacity={0.75}
-            className="bg-white rounded-full p-2 elevation"
+            className="bg-red-500 rounded-full p-2 elevation"
             onPress={() => setMostarModalLogout(true)}
           >
             <Text>
-              <CirclePower size={24} />
+              <CirclePower size={24} color={"#fff"} />
             </Text>
           </TouchableOpacity>
         </View>
@@ -121,6 +125,7 @@ export default function HomeScreen({
         />
       </Modal>
 
+      {/* Modal para sair */}
       <Modal transparent visible={mostrarModalLogout} animationType="slide">
         <ModalLogout
           closeModal={() => setMostarModalLogout(false)}
@@ -131,18 +136,25 @@ export default function HomeScreen({
       {/* Lista das despesas */}
       <View className="w-full rounded-t-[42px] flex-1 mt-10 bg-white ">
         {loadingListaDespesas ? (
-          <View>
+          <View className="mt-10 items-center">
             <ActivityIndicator size={"large"} color={"#085041"} />
+          </View>
+        ) : listaDespesas.length === 0 ? (
+          <View className="mt-10 items-center">
+            <Text>Você ainda não tem gastos</Text>
           </View>
         ) : (
           <FlatList
             data={listaDespesas}
             renderItem={(item) => (
               <CardDespesa
+                id={item.item.id}
                 descricao={item.item.descricao}
                 valor={item.item.valor}
                 data_despesa={item.item.data_despesa}
+                situacao={item.item.situacao}
                 deleteDespesas={() => deleteDespesas(String(item.item.id))}
+                categoria={item.item.categoria}
               />
             )}
           />

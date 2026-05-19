@@ -15,6 +15,8 @@ const novaDespesaSchema = z.object({
   data_despesa: z.date({
     error: "Data escolhida é inválida",
   }),
+
+  categoria: z.string().min(1, "Selecione uma categoria"),
 });
 
 //  Criando e exportando a tipagem
@@ -38,6 +40,7 @@ const useNovaDespesa = () => {
         data.descricao,
         valorConvertido,
         data.data_despesa,
+        data.categoria,
       );
     } catch (error) {
       console.log(error);

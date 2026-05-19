@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import {
   ActivityIndicator,
+  FlatList,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -40,6 +41,15 @@ export default function NovaDespesa({
   onSubmit,
 }: MoldaNovaDespesaProps) {
   const [mostrarCalendario, setMostrarCalendario] = useState<boolean>(false);
+
+  const [categoria, setCategoria] = useState<string>("");
+
+  const [listaCategorias, setListaCategorias] = useState<string[]>([
+    "Alimentação",
+    "Abastecimento",
+    "Mercado",
+    "Roupas",
+  ]);
 
   async function handleNovaDespesa(data: DespesaFormData) {
     await onSubmit(data);
@@ -151,6 +161,52 @@ export default function NovaDespesa({
                   {errors.descricao && (
                     <Text className="text-left text-red-500">
                       {errors.descricao?.message}
+                    </Text>
+                  )}
+                </View>
+
+                {/* Área para selecionar a categoria */}
+                <View>
+                  <Text className="font-semibold text-lg text-zinc-600">
+                    Selecione sua categoria
+                  </Text>
+
+                  <Controller
+                    control={control}
+                    name="categoria"
+                    defaultValue=""
+                    render={({ field: { value, onChange } }) => (
+                      <FlatList
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        data={listaCategorias}
+                        renderItem={({ item, index }) => (
+                          <View key={index} className="mr-4">
+                            <TouchableOpacity
+                              onPress={() => {
+                                onChange((value = item));
+                                setCategoria(item);
+                              }}
+                              className="bg-white px-3 py-1 rounded border-2"
+                              style={{
+                                borderColor:
+                                  categoria === item ? "#04583192" : "#fff",
+                              }}
+                            >
+                              <Text>{item}</Text>
+                            </TouchableOpacity>
+                          </View>
+                        )}
+                      />
+                    )}
+                  />
+                </View>
+
+                {/* Mensagem de erro da descrição */}
+                <View className="w-[80%] ml-2">
+                  {errors.categoria && (
+                    <Text className="text-left text-red-500">
+                      {errors.categoria?.message}
                     </Text>
                   )}
                 </View>

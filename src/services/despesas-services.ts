@@ -3,7 +3,12 @@ import { DespesaProps } from "../types/Despesa";
 
 export const DataBaseServices = {
   //  Metodo para registrar uma nova despesa
-  novaDespesa: async (descricao: string, valor: number, data_despesa: Date) => {
+  novaDespesa: async (
+    descricao: string,
+    valor: number,
+    data_despesa: Date,
+    categoria: string,
+  ) => {
     // Verificar se tem o 'id' do usuario na sessão
     const { data: dados_usuario } = await supabase.auth.getUser();
 
@@ -17,6 +22,7 @@ export const DataBaseServices = {
       descricao: descricao,
       valor_despesa: valor,
       data_despesa: data_despesa,
+      categoria: categoria,
       user_id: user_id,
       situacao: false,
     });
@@ -38,7 +44,7 @@ export const DataBaseServices = {
 
     const { data: despesas } = await supabase
       .from("despesas")
-      .select("id, descricao, data_despesa, valor_despesa, situacao")
+      .select("id, descricao, data_despesa, valor_despesa, situacao, categoria")
       .eq("user_id", user_id);
 
     if (!despesas) return [];
@@ -50,6 +56,7 @@ export const DataBaseServices = {
         data_despesa: item.data_despesa,
         id: item.id,
         situacao: item.situacao,
+        categoria: item.categoria,
       }),
     );
 

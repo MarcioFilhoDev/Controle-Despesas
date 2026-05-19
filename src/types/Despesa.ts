@@ -1,7 +1,8 @@
 export interface DespesaProps {
-  id?: string;
+  id: string;
   descricao: string;
   valor: number;
   data_despesa: Date;
-  situacao?: boolean;
+  situacao: boolean;
+  categoria: string;
 }
