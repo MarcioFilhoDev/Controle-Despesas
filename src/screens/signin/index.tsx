@@ -4,6 +4,7 @@ import {
   Keyboard,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -14,7 +15,7 @@ import {
 import { inputTextColor } from "@/src/constants/input-text-color";
 import { SignInFormData } from "@/src/hooks/useSignIn";
 import { Link } from "expo-router";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react-native";
+import { Eye, EyeOff, HandCoins, Lock, Mail } from "lucide-react-native";
 import {
   Control,
   Controller,
@@ -42,8 +43,13 @@ export default function SignInScreen({
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <ScrollView contentContainerStyle={{ height: "100%" }}>
-        <View className="flex-1 items-center justify-center bg-receita-50">
-          <Text className="text-3xl w-[80%] mb-12 text-receita font-bold">
+        <View
+          className="flex-1 items-center bg-receita-50"
+          style={{ paddingTop: Number(StatusBar.currentHeight) + 50 }}
+        >
+          <HandCoins size={64} color={"#085041"} />
+
+          <Text className="text-3xl w-[80%] mt-12 mb-6 scroll-my-safe-or-12 text-receita font-bold">
             Bem vindo de volta!
           </Text>
 

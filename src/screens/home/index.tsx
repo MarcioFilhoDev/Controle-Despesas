@@ -10,6 +10,7 @@ import { useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
+  Image,
   Modal,
   StatusBar,
   Text,
@@ -141,7 +142,17 @@ export default function HomeScreen({
           </View>
         ) : listaDespesas.length === 0 ? (
           <View className="mt-10 items-center">
-            <Text className="text-lg">Você ainda não tem gastos</Text>
+            <View className="bg-cinza-100/50 p-6 rounded-full">
+              <Image source={require("../../assets/receipt.png")} />
+            </View>
+            <Text className="text-lg font-semibold mt-4">
+              Você ainda não tem gastos
+            </Text>
+
+            <Text className="text-center w-[50%] text-base text-cinza-400 mt-2">
+              Toque no botão de adição acima para começar sua jornada
+              financeira.
+            </Text>
           </View>
         ) : (
           <View className="flex-1 mx-[5%]">

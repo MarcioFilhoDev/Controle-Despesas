@@ -1,6 +1,6 @@
 import { Trash } from "lucide-react-native";
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Alert, Text, TouchableOpacity } from "react-native";
 
 interface CardDespesaProps {
   deleteDespesas: (id: string) => Promise<void>;
@@ -13,7 +13,18 @@ export default function DeletarOptionSwipe({
 }: CardDespesaProps) {
   return (
     <TouchableOpacity
-      onPress={() => deleteDespesas(id)}
+      onPress={() =>
+        Alert.alert("Apagar essa despesa?", "Quer mesmo apagar esse despesa?", [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "Sim",
+            onPress: () => deleteDespesas(id),
+          },
+        ])
+      }
       activeOpacity={0.65}
       className="bg-[#E83D55] w-20 p-2 rounded-lg items-center justify-center"
     >

@@ -158,8 +158,9 @@ Este projeto foi desenvolvido com foco em:
 ## 📌 Melhorias Futuras
 
 - [ ] Edição de despesas já registradas
-- [ ] Seleção e criação de categorias para despesas
 - [ ] Adicionar filtro de busca de despesas, por período e/ou categoria
+- [ ] Inserção de despesas com parcelas
+- [ ] Visualização de despesas futuras
 
 ---
 

@@ -20,7 +20,7 @@ export const DataBaseServices = {
   ) => {
     const user_id = await getUserId();
 
-    const { error, data } = await supabase.from("despesas").insert({
+    const { error } = await supabase.from("despesas").insert({
       created_at: new Date(),
       descricao: descricao,
       valor_despesa: valor,
@@ -29,8 +29,6 @@ export const DataBaseServices = {
       user_id: user_id,
       situacao: false,
     });
-
-    console.log(data);
 
     if (error) throw new Error(error.message);
   },

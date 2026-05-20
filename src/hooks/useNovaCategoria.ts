@@ -35,14 +35,12 @@ const useNovaCategoria = () => {
         setError("descricao", {
           message: "Você já tem essa categoria registrada",
         });
-        console.log("essa categoria ja existe");
         return false;
       }
 
       await CategoriaServices.novaCategoria(descricao);
       return true;
     } catch (error) {
-      console.log("Erro ao adicionar uma nova categoria");
       console.log(error);
     }
   };

@@ -15,11 +15,11 @@ const useGetInfoUser = () => {
         const horario = new Date().getHours();
 
         if (horario > 20 || horario <= 5) {
-          setMensagemInicial(`Boa noite, ${username.toLowerCase()}.`);
+          setMensagemInicial(`Boa noite, ${username}.`);
         } else if (horario > 5 && horario <= 12) {
-          setMensagemInicial(`Bom dia, ${username.toLowerCase()}.`);
+          setMensagemInicial(`Bom dia, ${username}.`);
         } else {
-          setMensagemInicial(`Boa tarde, ${username.toLowerCase()}.`);
+          setMensagemInicial(`Boa tarde, ${username}.`);
         }
       }
     });

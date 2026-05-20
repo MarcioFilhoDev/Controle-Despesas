@@ -10,8 +10,6 @@ const useGetDespesas = () => {
 
   //  Pegando todas as despesas do usuário
   const getDespesas = useCallback(async () => {
-    console.log("carregando despesas");
-
     setLoadingListaDespesas(true);
 
     try {

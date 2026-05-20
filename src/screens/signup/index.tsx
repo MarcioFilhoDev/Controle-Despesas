@@ -10,6 +10,7 @@ import {
   UseFormHandleSubmit,
 } from "react-hook-form";
 import {
+  ActivityIndicator,
   Keyboard,
   Pressable,
   ScrollView,
@@ -158,7 +159,11 @@ export default function SignUpScreen({
             className="bg-receita-600 w-[80%] py-2 h-[42] justify-center rounded-lg mb-2"
           >
             <Text className="text-[20px] text-center text-white font-semibold">
-              Cadastrar
+              {isSubmitting ? (
+                <ActivityIndicator color={"#fff"} />
+              ) : (
+                "Cadastrar"
+              )}
             </Text>
           </TouchableOpacity>
 
