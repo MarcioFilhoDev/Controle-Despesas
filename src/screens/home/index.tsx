@@ -54,7 +54,7 @@ export default function HomeScreen({
       style={{ paddingTop: Number(StatusBar.currentHeight) + 20 }}
     >
       {/* Header */}
-      <View className="w-[80%] flex flex-row gap-6 items-center mb-4">
+      <View className="px-5 flex flex-row gap-6 items-center mb-4">
         <Text className="text-2xl font-semibold flex-1 truncate line-clamp-1">
           {mensagemInicial}
         </Text>
@@ -85,7 +85,7 @@ export default function HomeScreen({
       </View>
 
       {/* Card total */}
-      <View className="flex flex-row w-[80%] gap-4">
+      <View className="flex flex-row px-5 gap-4">
         <TouchableOpacity
           activeOpacity={0.75}
           className="bg-receita-200/60 w-full h-36 flex p-6 rounded-3xl gap-4 border border-receita-600/50"
@@ -155,42 +155,39 @@ export default function HomeScreen({
             </Text>
           </View>
         ) : (
-          <View className="flex-1 mx-[5%]">
+          <View className="mx-[5%] mt-4">
             <FlatList
-              contentContainerStyle={{
-                paddingVertical: 10,
-                gap: 22,
-              }}
               showsVerticalScrollIndicator={false}
               data={listaDespesas}
-              renderItem={(item) => (
+              renderItem={({ item }) => (
                 <ReanimatedSwipeable
                   friction={2}
-                  overshootFriction={4}
+                  overshootRight={false}
                   renderRightActions={() => (
                     <View className="flex-row">
                       <DeletarOptionSwipe
-                        id={item.item.id}
-                        deleteDespesas={() =>
-                          deleteDespesas(String(item.item.id))
-                        }
+                        id={item.id}
+                        deleteDespesas={() => deleteDespesas(String(item.id))}
                       />
-                      {!item.item.situacao && (
+
+                      {!item.situacao && (
                         <PagarOptionSwipe
-                          pagarDespesa={() => pagarDespesa(item.item.id)}
+                          pagarDespesa={() => pagarDespesa(item.id)}
                         />
                       )}
                     </View>
                   )}
                 >
-                  <CardDespesa
-                    id={item.item.id}
-                    descricao={item.item.descricao}
-                    valor={item.item.valor}
-                    data_despesa={item.item.data_despesa}
-                    situacao={item.item.situacao}
-                    categoria={item.item.categoria}
-                  />
+                  <View className="">
+                    <CardDespesa
+                      id={item.id}
+                      descricao={item.descricao}
+                      valor={item.valor}
+                      data_despesa={item.data_despesa}
+                      situacao={item.situacao}
+                      categoria={item.categoria}
+                    />
+                  </View>
                 </ReanimatedSwipeable>
               )}
             />

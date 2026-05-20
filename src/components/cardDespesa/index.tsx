@@ -39,43 +39,52 @@ export default function CardDespesa({
     },
   };
 
+  //  Icone padrão
   const config = categoriaIcone[categoria] ?? {
     icone: <ShoppingBasket size={26} color="#22c55e" />,
     cor: "bg-green-100",
   };
 
   return (
-    <View className="rounded-lg bg-white">
-      <View>
-        <View
-          className="flex-row border-l-[8px] py-2 rounded-l-lg "
-          style={{ borderColor: situacao ? "#1D9E75" : "#dd5555" }}
-        >
-          <View className="flex-row items-center gap-2 ml-2">
-            <Text className={`${config.cor} p-2 rounded-md`}>
-              {config.icone}
-            </Text>
-
-            {/* Área descrição da despesa */}
-            <View className="w-[60%] ">
-              <Text
-                className="text-[15px] font-bold mb-2"
-                ellipsizeMode="tail"
-                numberOfLines={1}
-              >
-                {descricao}
-              </Text>
-
-              <Text className="text-sm">
-                {new Date(data_despesa).toLocaleDateString("pt-BR")}
-              </Text>
-            </View>
+    <View
+      className="bg-white px-4 py-4"
+      style={{
+        elevation: 2,
+      }}
+    >
+      <View
+        className="flex-row items-center justify-between border-l-4 pl-3"
+        style={{
+          borderColor: situacao ? "#1D9E75" : "#ef4444",
+        }}
+      >
+        <View className="flex-row items-center flex-1">
+          <View
+            className={`${config.cor} w-14 h-14 rounded-2xl items-center justify-center`}
+          >
+            {config.icone}
           </View>
 
-          <Text className="text-[18px] w-[20%] flex-1 font-semibold text-cinza-900 tracking-wide">
-            -R$ <Text>{valor.toFixed(2)}</Text>
-          </Text>
+          <View className="ml-3 flex-1">
+            <Text
+              className="text-base font-semibold text-zinc-800"
+              numberOfLines={1}
+            >
+              {descricao}
+            </Text>
+
+            <Text className="text-sm text-zinc-500 mt-1">
+              {new Date(data_despesa).toLocaleDateString("pt-BR")}
+            </Text>
+          </View>
         </View>
+
+        <Text className="text-lg font-bold text-zinc-900 ml-3">
+          {valor.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </Text>
       </View>
     </View>
   );
