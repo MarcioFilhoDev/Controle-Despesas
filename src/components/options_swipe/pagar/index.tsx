@@ -11,9 +11,9 @@ export default function PagarOptionSwipe({ pagarDespesa }: PagarOptionProps) {
     <TouchableOpacity
       onPress={pagarDespesa}
       activeOpacity={0.65}
-      className="bg-[#3ff35d] w-24 p-2 rounded-lg items-center justify-center"
+      className="bg-[#3ed457] w-20 p-2 rounded-lg items-center justify-center"
     >
-      <DollarSign size={20} color={"#fff"} strokeWidth={2.5} />
+      <DollarSign size={24} color={"#fff"} strokeWidth={2.5} />
     </TouchableOpacity>
   );
 }

@@ -47,13 +47,13 @@ export default function CardDespesa({
 
   return (
     <View
-      className="bg-white px-4 py-4"
+      className="bg-white px-2 py-2"
       style={{
         elevation: 2,
       }}
     >
       <View
-        className="flex-row items-center justify-between border-l-4 pl-3"
+        className="flex-row items-center justify-between border-l-[6px] rounded-l-md pl-2"
         style={{
           borderColor: situacao ? "#1D9E75" : "#ef4444",
         }}

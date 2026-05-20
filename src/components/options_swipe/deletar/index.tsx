@@ -26,9 +26,9 @@ export default function DeletarOptionSwipe({
         ])
       }
       activeOpacity={0.65}
-      className="bg-[#E83D55] w-24 p-2 rounded-lg items-center justify-center"
+      className="bg-[#E83D55] w-20 p-2 rounded-lg items-center justify-center"
     >
-      <Trash size={20} color={"#fff"} strokeWidth={2.5} />
+      <Trash size={24} color={"#fff"} strokeWidth={2.5} />
     </TouchableOpacity>
   );
 }
