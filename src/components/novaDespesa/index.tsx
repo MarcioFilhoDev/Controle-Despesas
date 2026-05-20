@@ -245,7 +245,7 @@ export default function NovaDespesa({
                   <Controller
                     control={control}
                     name="data_despesa"
-                    defaultValue={undefined}
+                    defaultValue={new Date()}
                     render={({ field: { value, onChange } }) => (
                       <View>
                         <Pressable

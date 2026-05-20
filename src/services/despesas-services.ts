@@ -1,6 +1,15 @@
 import { supabase } from "../config/supabase";
 import { DespesaProps } from "../types/Despesa";
 
+// Helper para evitar repetição em todo método
+const getUserId = async (): Promise<string> => {
+  const { data, error } = await supabase.auth.getUser();
+
+  if (error || !data.user) throw new Error("Usuário não autenticado");
+
+  return data.user.id;
+};
+
 export const DataBaseServices = {
   //  Metodo para registrar uma nova despesa
   novaDespesa: async (
@@ -9,15 +18,9 @@ export const DataBaseServices = {
     data_despesa: Date,
     categoria: string,
   ) => {
-    // Verificar se tem o 'id' do usuario na sessão
-    const { data: dados_usuario } = await supabase.auth.getUser();
+    const user_id = await getUserId();
 
-    if (!dados_usuario) return;
-
-    //  Salvando o user_id em uma variavel
-    const user_id = dados_usuario.user?.id;
-
-    const { error } = await supabase.from("despesas").insert({
+    const { error, data } = await supabase.from("despesas").insert({
       created_at: new Date(),
       descricao: descricao,
       valor_despesa: valor,
@@ -27,25 +30,21 @@ export const DataBaseServices = {
       situacao: false,
     });
 
-    if (error) {
-      throw new Error(error.message);
-    }
+    console.log(data);
+
+    if (error) throw new Error(error.message);
   },
 
   //  Metodo para resgatar todas as despesas
   listaDespesas: async () => {
-    // Verificar se tem o 'id' do usuario na sessão
-    const { data: dados_usuario } = await supabase.auth.getUser();
+    const user_id = await getUserId();
 
-    if (!dados_usuario) return;
-
-    //  Salvando o user_id em uma variavel
-    const user_id = dados_usuario.user?.id;
-
-    const { data: despesas } = await supabase
+    const { data: despesas, error } = await supabase
       .from("despesas")
       .select("id, descricao, data_despesa, valor_despesa, situacao, categoria")
       .eq("user_id", user_id);
+
+    if (error) throw new Error(error.message);
 
     if (!despesas) return [];
 
@@ -64,27 +63,28 @@ export const DataBaseServices = {
   },
 
   deletarDespesa: async (id: string) => {
-    // Verificar se tem o 'id' do usuario na sessão
-    const { data: dados_usuario } = await supabase.auth.getUser();
-
-    if (!dados_usuario) return;
-
-    //  Salvando o user_id em uma variavel
-    const user_id = dados_usuario.user?.id;
+    const user_id = await getUserId();
 
     //  Verificar no banco de dados se existe essa
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("despesas")
       .delete()
       .eq("user_id", user_id)
       .eq("id", id);
 
-    if (!data) return;
+    if (error) throw new Error(error.message);
+  },
 
-    if (error) {
-      console.log("Erro ao deletar despesa");
-      console.log(error.message);
-      return;
-    }
+  //  Pagar despesa
+  pagarDespesa: async (id_despesa: string) => {
+    const user_id = await getUserId();
+
+    const { error } = await supabase
+      .from("despesas")
+      .update({ situacao: true })
+      .eq("user_id", user_id)
+      .eq("id", id_despesa);
+
+    if (error) throw new Error(error.message);
   },
 };

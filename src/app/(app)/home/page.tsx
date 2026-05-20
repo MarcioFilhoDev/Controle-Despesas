@@ -19,11 +19,12 @@ export default function Home() {
 
   //  Resgatar as despesas do usuário
   const {
-    getDespesas,
-    deleteDespesas,
     listaDespesas,
     loadingListaDespesas,
     totalDespesas,
+    getDespesas,
+    deleteDespesas,
+    pagarDespesa,
   } = useGetDespesas();
 
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function Home() {
         reset={reset}
         deleteDespesas={deleteDespesas}
         signOutUser={signOutUser}
+        pagarDespesa={pagarDespesa}
       />
     </GestureHandlerRootView>
   );

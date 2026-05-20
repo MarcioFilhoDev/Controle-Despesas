@@ -14,9 +14,7 @@ export const authService = {
     });
 
     //  Caso ocorra um erro, apresenta um erro e não crasha a aplicação
-    if (error) {
-      throw error;
-    }
+    if (error) throw new Error(error.message);
 
     //  Para quem chamar a função 'signUp', recebe os dados dentro de 'data'
     return data;
@@ -25,9 +23,7 @@ export const authService = {
   signOut: async () => {
     const { error } = await supabase.auth.signOut();
 
-    if (error) {
-      throw new Error(error.message);
-    }
+    if (error) throw new Error(error.message);
 
     return true;
   },
@@ -38,9 +34,7 @@ export const authService = {
       password: password,
     });
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw new Error(error.message);
 
     return data;
   },

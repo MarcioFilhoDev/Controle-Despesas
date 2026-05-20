@@ -10,6 +10,8 @@ const useGetDespesas = () => {
 
   //  Pegando todas as despesas do usuário
   const getDespesas = useCallback(async () => {
+    console.log("carregando despesas");
+
     setLoadingListaDespesas(true);
 
     try {
@@ -51,12 +53,22 @@ const useGetDespesas = () => {
     }
   };
 
+  const pagarDespesa = async (id_despesa: string) => {
+    try {
+      await DataBaseServices.pagarDespesa(id_despesa);
+      await getDespesas(); // mesma instância, funciona
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     listaDespesas,
     loadingListaDespesas,
     totalDespesas,
     getDespesas,
     deleteDespesas,
+    pagarDespesa,
   };
 };
 

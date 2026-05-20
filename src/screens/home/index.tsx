@@ -2,6 +2,7 @@ import CardDespesa from "@/src/components/cardDespesa";
 import ModalLogout from "@/src/components/modalLogout";
 import NovaDespesa from "@/src/components/novaDespesa";
 import DeletarOptionSwipe from "@/src/components/options_swipe/deletar";
+import PagarOptionSwipe from "@/src/components/options_swipe/pagar";
 import { DespesaProps } from "@/src/types/Despesa";
 import { NovaDespesaProps } from "@/src/types/NovaDespesa";
 import { CirclePower, Plus } from "lucide-react-native";
@@ -24,6 +25,7 @@ interface HomeScreenProps extends NovaDespesaProps {
   totalDespesas: number;
   deleteDespesas: (id_despesa: string) => Promise<void>;
   signOutUser: () => Promise<void>;
+  pagarDespesa: (id_despesa: string) => Promise<void>;
 }
 
 export default function HomeScreen({
@@ -39,6 +41,7 @@ export default function HomeScreen({
   reset,
   deleteDespesas,
   signOutUser,
+  pagarDespesa,
 }: HomeScreenProps) {
   const [mostrarModalNovaDespesa, setMostrarModalNovaDespesa] =
     useState<boolean>(false);
@@ -154,12 +157,19 @@ export default function HomeScreen({
                   friction={2}
                   overshootFriction={4}
                   renderRightActions={() => (
-                    <DeletarOptionSwipe
-                      id={item.item.id}
-                      deleteDespesas={() =>
-                        deleteDespesas(String(item.item.id))
-                      }
-                    />
+                    <View className="flex-row">
+                      <DeletarOptionSwipe
+                        id={item.item.id}
+                        deleteDespesas={() =>
+                          deleteDespesas(String(item.item.id))
+                        }
+                      />
+                      {!item.item.situacao && (
+                        <PagarOptionSwipe
+                          pagarDespesa={() => pagarDespesa(item.item.id)}
+                        />
+                      )}
+                    </View>
                   )}
                 >
                   <CardDespesa
