@@ -5,7 +5,7 @@ import {
   ShoppingBasket,
   UtensilsCrossed,
 } from "lucide-react-native";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 
 type CategoriaConfig = {
   icone: React.ReactNode;
@@ -45,7 +45,7 @@ export default function CardDespesa({
   };
 
   return (
-    <TouchableOpacity activeOpacity={1} className="rounded-lg bg-white">
+    <View className="rounded-lg bg-white">
       <View>
         <View
           className="flex-row border-l-[8px] py-2 rounded-l-lg "
@@ -77,6 +77,6 @@ export default function CardDespesa({
           </Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }

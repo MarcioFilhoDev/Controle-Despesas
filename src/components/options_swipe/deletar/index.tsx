@@ -15,7 +15,7 @@ export default function DeletarOptionSwipe({
     <TouchableOpacity
       onPress={() => deleteDespesas(id)}
       activeOpacity={0.65}
-      className="bg-red-600 p-2 rounded-lg items-center justify-center"
+      className="bg-[#E83D55] p-2 rounded-lg items-center justify-center"
     >
       <Trash size={20} color={"#fff"} strokeWidth={2.5} />
       <Text className="text-white font-semibold">Deletar</Text>

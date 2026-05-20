@@ -42,7 +42,6 @@ export default function HomeScreen({
 }: HomeScreenProps) {
   const [mostrarModalNovaDespesa, setMostrarModalNovaDespesa] =
     useState<boolean>(false);
-
   const [mostrarModalLogout, setMostarModalLogout] = useState<boolean>(false);
 
   return (
@@ -91,8 +90,8 @@ export default function HomeScreen({
             Total dos seus gastos
           </Text>
 
-          <Text className="text-2xl font-bold text-cinza-800">
-            R$
+          <Text className="text-2xl font-bold text-cinza-600">
+            R${" "}
             <Text className="text-4xl font-bold text-cinza-900">
               {loadingListaDespesas ? (
                 <ActivityIndicator size={"large"} color={"#2C2C2A"} />
@@ -145,14 +144,15 @@ export default function HomeScreen({
           <View className="flex-1 mx-[5%]">
             <FlatList
               contentContainerStyle={{
-                flex: 1,
+                paddingVertical: 10,
                 gap: 22,
               }}
               showsVerticalScrollIndicator={false}
               data={listaDespesas}
               renderItem={(item) => (
                 <ReanimatedSwipeable
-                  friction={4}
+                  friction={2}
+                  overshootFriction={4}
                   renderRightActions={() => (
                     <DeletarOptionSwipe
                       id={item.item.id}
@@ -161,7 +161,6 @@ export default function HomeScreen({
                       }
                     />
                   )}
-                  // renderLeftActions={() => <EditarOptionSwipe />}
                 >
                   <CardDespesa
                     id={item.item.id}
